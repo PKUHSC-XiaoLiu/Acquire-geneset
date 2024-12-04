@@ -1,0 +1,24 @@
+#1. From MsigDB   
+    # donwload and library library
+    install.packages("geneset")
+    library(geneset)
+    library(clusterProfiler)
+    
+    # get human geneset
+    msigdb=getMsigdb(org="human")
+    names(msigdb)
+    geneset_table=msigdb$geneset#geneset information are in this table
+    
+    hallmark_list=c(unique(msigdb$geneset$gs_name))#get hallmark name
+    hallmark_list=gsub("HALLMARK_","",hallmark_list)#U can also simplify the name
+    hallmark_list
+    #acquire the gene set you needed :An example 
+    HALLMARK_GLYCOLYSIS=geneset_table$entrez_gene[geneset_table$gs_name=="HALLMARK_GLYCOLYSIS"]
+    # then u successfully get the gene set(entrez_gene format) you needed.
+    
+    #get the gene set in other format
+    library(clusterProfiler)
+    your_list=HALLMARK_GLYCOLYSIS    
+    gene_trans=bitr(your_list, fromType="ENTREZID", toType=c("SYMBOL","ENSEMBL"), OrgDb="org.Hs.eg.db")
+    #and then u can use the suitable format to do the following analysis.
+    
