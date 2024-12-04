@@ -1,0 +1,20 @@
+    library(clusterProfiler)
+    GO_data <- clusterProfiler:::get_GO_data("org.Hs.eg.db", "ALL", "SYMBOL") 
+    names(GO_data)
+    # [1] "PATHID2NAME"  "EXTID2PATHID" "GO2ONT"       "PATHID2EXTID"
+    # 分别对应基因名（symbol），GO编号的pathway名称，BPMFCC，pathway名称，
+    
+    library(tidyverse)
+    go_name = reshape2::melt(GO_data$PATHID2NAME) %>% 
+        rownames_to_column("ID") %>%
+        dplyr::rename("Name"="value")
+    go_type = reshape2::melt(GO_data$GO2ONT) %>% 
+        rownames_to_column("ID") %>%
+        dplyr::rename("Type"="value")
+    go_info = inner_join(go_name, go_type) %>% 
+        dplyr::mutate(GSEA=toupper(gsub(" ","_",paste0("GO",Type," ",Name))))
+    
+    go_pathway_list=unique(go_info$Name)
+
+    # example:go_pathway_list[40]"mitotic G1 phase"
+    your_pathway_gene2=GO_data$PATHID2EXTID[go_name$ID[go_name$Name=="mitotic G1 phase"]][[1]]
