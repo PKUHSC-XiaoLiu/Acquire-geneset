@@ -1,0 +1,12 @@
+    library(clusterProfiler)
+    hsa_kegg <- clusterProfiler::download_KEGG("hsa")
+    kegg_pathway_list=unique(hsa_kegg$KEGGPATHID2NAME$to)
+    
+
+    # example:kegg_pathway_list[100]:Ribosome biogenesis in eukaryotes
+
+    your_pathway_gene=hsa_kegg$KEGGPATHID2EXTID$to[hsa_kegg$KEGGPATHID2EXTID$from==
+                                                       unique(hsa_kegg$KEGGPATHID2NAME$from[hsa_kegg$KEGGPATHID2NAME$to==
+                                                                                                "Ribosome biogenesis in eukaryotes"])]
+    #这一句代码已经成型，只需要改最后一行的pathway名称就可以获取目标pathway对应的genelist
+    # then u successfully get the gene set(entrez_gene format) you needed.    
