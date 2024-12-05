@@ -2,7 +2,7 @@
     GO_data <- clusterProfiler:::get_GO_data("org.Hs.eg.db", "ALL", "SYMBOL") 
     names(GO_data)
     # [1] "PATHID2NAME"  "EXTID2PATHID" "GO2ONT"       "PATHID2EXTID"
-    # 分别对应基因名(symbol)，GO编号的pathway名称，BPMFCC，pathway名称，
+    # 分别对应基因名(symbol),GO编号的pathway名称,BPMFCC,pathway名称，
     
     library(tidyverse)
     go_name = reshape2::melt(GO_data$PATHID2NAME) %>% 
