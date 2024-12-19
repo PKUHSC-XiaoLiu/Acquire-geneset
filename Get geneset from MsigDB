@@ -20,5 +20,10 @@
     library(clusterProfiler)
     your_list=HALLMARK_GLYCOLYSIS    
     gene_trans=bitr(your_list, fromType="ENTREZID", toType=c("SYMBOL","ENSEMBL"), OrgDb="org.Hs.eg.db")
+    #if bitr is not so efficient,then try mapIDs
+    gene_trans <-mapIds(org.Hs.eg.db, 
+                  keys=your_list,
+                  column="SYMBOL",
+                  keytype="ENTREZID" )
     #and then u can use the suitable format to do the following analysis.
     
